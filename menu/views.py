@@ -1,7 +1,8 @@
 from django.db.models import Prefetch
 from rest_framework import generics
 
-from menu.models import Food, FoodCategory, FoodListSerializer
+from menu.models import Food, FoodCategory
+from menu.serializers import FoodListSerializer
 
 
 class FoodListAPIView(generics.ListAPIView):
