@@ -11,9 +11,11 @@ class FoodListAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         # Фильтр только опубликованных блюд
-        published_foods = Food.objects.filter(is_publish=True).order_by('internal_code')
+        # Использование select_related для объединения запросов и prefetch_related для кеширования допов.
+        published_foods = Food.objects.select_related('category').filter(is_publish=True).prefetch_related(
+            'additional')
 
-        # Сортируем по коду в приложении
+        # Сортировка по коду в приложении
         published_foods = published_foods.order_by('internal_code')
 
         # Фильтр категорий, у которых есть хотя бы одно опубликованное блюдо
